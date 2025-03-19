@@ -8,14 +8,10 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-os.environ["GROQ_API_KEY"] = "GROQ_API_KEY"
+
+
+
 #Agent one websearch agent 
-
-from phi import GroqSettings
-
-groq_settings = GroqSettings(api_key="GROQ_API_KEY")
-model = phi.model.GroqModel(settings=groq_settings)
-
 
 web_search_agent = Agent(
     name = 'web search Agent',
@@ -41,11 +37,12 @@ finance_agent = Agent(
     markdown = True,
 )
 
-mutli_ai_agent = Agent(
+multi_ai_agent = Agent(
+    model = Groq(id = "llama-3.2-90b-vision-preview"),
     team = [web_search_agent, finance_agent],
     instructions = ["Always include sources","Use tables to display data"],
     show_too_calls = True,
     markdown = True,
 )
 
-mutli_ai_agent.print_response("Summarize analyst recommendation and share the latest news for NVDA", stream = True)
+multi_ai_agent.print_response("Summarize analyst recommendation and share the latest news for NVDA", stream = True)
